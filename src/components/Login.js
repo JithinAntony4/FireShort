@@ -4,86 +4,88 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
-import {withStyles} from "@material-ui/styles";
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {Redirect} from "react-router-dom";
+import { withStyles } from "@material-ui/styles";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-import {loginUser} from "../actions";
+import { loginUser } from "../actions";
 
 const styles = () => ({
-  "@global" : {body : {backgroundColor : "#fff"}},
-  paper : {
-    marginTop : 80,
-    display : "flex",
-    padding : 20,
-    flexDirection : "column",
-    alignItems : "center",
+  "@global": { body: { backgroundColor: "#fff" } },
+  paper: {
+    marginTop: 80,
+    display: "flex",
+    padding: 20,
+    flexDirection: "column",
+    alignItems: "center",
   },
-  top : {
-    marginTop : 10,
+  top: {
+    marginTop: 10,
   },
-  maintext : {
-    fontFamily : "Pacifico",
-    fontSize : "45px",
-    marginLeft : "auto",
-    marginRight : "auto",
-    textAlign : "center",
+  maintext: {
+    fontFamily: "Pacifico",
+    fontSize: "45px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textAlign: "center",
   },
-  margin : {
-    margin : theme.spacing(3),
+  margin: {
+    margin: theme.spacing(3),
   },
-  avatar1 : {
-    marginLeft : "auto",
-    marginRight : "auto",
-    backgroundColor : "#f50057",
-    width : theme.spacing(6),
-    height : theme.spacing(6),
+  avatar1: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    backgroundColor: "#f50057",
+    width: theme.spacing(6),
+    height: theme.spacing(6),
   },
-  avatar2 : {
-    marginLeft : "auto",
-    marginRight : "auto",
-    backgroundColor : "#f50057",
-    width : theme.spacing(10),
-    height : theme.spacing(10),
+  avatar2: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    backgroundColor: "#f50057",
+    width: theme.spacing(10),
+    height: theme.spacing(10),
   },
-  form : {marginTop : 1},
-  errorText : {color : "#f50057", marginBottom : 5, textAlign : "center"},
+  form: { marginTop: 1 },
+  errorText: { color: "#f50057", marginBottom: 5, textAlign: "center" },
 });
 
-const theme = createMuiTheme({palette : {secondary : {main : "#fff"}}});
+const theme = createMuiTheme({ palette: { secondary: { main: "#fff" } } });
 
 class Login extends Component {
-  state = {email : "", password: ""};
+  state = { email: "", password: "" };
 
-  handleEmailChange = ({target}) => { this.setState({email : target.value}); };
+  handleEmailChange = ({ target }) => {
+    this.setState({ email: target.value });
+  };
 
-  handlePasswordChange =
-      ({target}) => { this.setState({password : target.value}); };
+  handlePasswordChange = ({ target }) => {
+    this.setState({ password: target.value });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const {dispatch} = this.props;
-    const {email, password} = this.state;
+    const { dispatch } = this.props;
+    const { email, password } = this.state;
 
     dispatch(loginUser(email, password));
   };
 
   render() {
-    const {classes, loginError, isAuthenticated, isLoading} = this.props;
+    const { classes, loginError, isAuthenticated, isLoading } = this.props;
     if (isAuthenticated) {
-      return <Redirect to = "/admin" />;
+      return <Redirect to="/admin" />;
     } else {
       return (
-          <Container component = "main" maxWidth = "xs">
-          <div className = {classes.top}>
-          <Avatar className = {classes.avatar1} src = "/favicon.ico">
-          </Avatar>
+        <Container component="main" maxWidth="xs">
+          <div className={classes.top}>
+            <Avatar className={classes.avatar1} src="/favicon.ico"></Avatar>
             <div className={classes.maintext}>FireShort</div>
           </div>
           <Paper className={classes.paper} elevation={3}>
@@ -91,14 +93,13 @@ class Login extends Component {
               className={classes.avatar2}
               src="/icons /
            hacker.svg "
-           >
-          </Avatar>
+            ></Avatar>
             <form onSubmit={this.handleSubmit}>
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems="flex-end">
                   <Grid item>
                     <EmailIcon />
-          </Grid>
+                  </Grid>
                   <Grid item>
                     <TextField
                       id="email"
@@ -106,14 +107,14 @@ class Login extends Component {
                       label="Email Address"
                       onChange={this.handleEmailChange}
                     />
-          </Grid>
+                  </Grid>
                 </Grid>
-          </div>
+              </div>
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems="flex-end">
                   <Grid item>
                     <LockIcon />
-          </Grid>
+                  </Grid>
                   <Grid item>
                     <TextField
                       id="password"
@@ -121,14 +122,14 @@ class Login extends Component {
                       label="Password"
                       onChange={this.handlePasswordChange}
                     />
-          </Grid>
+                  </Grid>
                 </Grid>
-          </div>
+              </div>
               {loginError && (
                 <Typography component="p" className={classes.errorText}>
                   Incorrect email or password.
-                </Typography>)
-    }
+                </Typography>
+              )}
               <br></br>
               <Button
                 type="submit"
@@ -143,12 +144,12 @@ class Login extends Component {
                     <CircularProgress color="secondary" />
                   ) : (
                     "Sign In"
-                  )
-  }
-  </MuiThemeProvider>
-              </Button></form>
-          </Paper><
-      /Container>
+                  )}
+                </MuiThemeProvider>
+              </Button>
+            </form>
+          </Paper>
+        </Container>
       );
     }
   }
